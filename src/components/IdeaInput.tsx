@@ -5,10 +5,11 @@ import { cn } from '../lib/utils';
 
 interface IdeaInputProps {
   onGenerate: (idea: string, audioData?: { data: string, mimeType: string }, style?: string) => void;
+  onStop?: () => void;
   isLoading: boolean;
 }
 
-export const IdeaInput: React.FC<IdeaInputProps> = ({ onGenerate, isLoading }) => {
+export const IdeaInput: React.FC<IdeaInputProps> = ({ onGenerate, onStop, isLoading }) => {
   const [idea, setIdea] = useState('');
   const [isRecording, setIsRecording] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
@@ -133,19 +134,22 @@ export const IdeaInput: React.FC<IdeaInputProps> = ({ onGenerate, isLoading }) =
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            type="submit"
-            disabled={(!idea.trim() && !audioBlob) || isLoading}
+            type={isLoading ? "button" : "submit"}
+            onClick={isLoading ? onStop : undefined}
+            disabled={(!idea.trim() && !audioBlob) && !isLoading}
             className={cn(
-              "px-6 py-3 rounded-xl font-medium flex items-center gap-2 transition-colors",
-              (idea.trim() || audioBlob) && !isLoading 
-                ? "bg-stone-900 text-white hover:bg-stone-800 shadow-md" 
-                : "bg-stone-100 text-stone-400 cursor-not-allowed"
+              "px-6 py-3 rounded-xl font-medium flex items-center gap-2 transition-all duration-300",
+              isLoading 
+                ? "bg-rose-100 text-rose-600 hover:bg-rose-200 border border-rose-200 shadow-lg" 
+                : (idea.trim() || audioBlob)
+                  ? "bg-stone-900 text-white hover:bg-stone-800 shadow-md" 
+                  : "bg-stone-100 text-stone-400 cursor-not-allowed"
             )}
           >
             {isLoading ? (
               <>
-                <Loader2 className="w-5 h-5 animate-spin" />
-                Planning...
+                <Square className="w-5 h-5 fill-current" />
+                Stop Planning
               </>
             ) : (
               <>

@@ -11,6 +11,7 @@ import { cn } from './lib/utils';
 export default function App() {
   const [plan, setPlan] = useState<AppPlan | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isStopping, setIsStopping] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'architect' | 'studio'>('architect');
   const [history, setHistory] = useState<AppPlan[]>([]);
@@ -55,18 +56,30 @@ export default function App() {
 
   const handleGenerate = async (idea: string, audioData?: { data: string, mimeType: string }, style?: string) => {
     setIsLoading(true);
+    setIsStopping(false);
     setError(null);
     try {
       const generatedPlan = await generateAppPlan(idea, audioData, style);
+      
+      // If user stopped while generating, don't update state
+      if (isStopping) return;
+
       setPlan(generatedPlan);
       saveToHistory(generatedPlan);
       setActiveTab('architect');
     } catch (err) {
+      if (isStopping) return;
       console.error(err);
       setError('Failed to generate plan. Please try again.');
     } finally {
       setIsLoading(false);
+      setIsStopping(false);
     }
+  };
+
+  const stopGeneration = () => {
+    setIsStopping(true);
+    setIsLoading(false);
   };
 
   const reset = () => {
@@ -143,7 +156,7 @@ export default function App() {
                 </div>
               </div>
 
-              <IdeaInput onGenerate={handleGenerate} isLoading={isLoading} />
+              <IdeaInput onGenerate={handleGenerate} onStop={stopGeneration} isLoading={isLoading} />
 
               <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 px-6">
                 {templates.map(t => (
