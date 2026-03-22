@@ -1,0 +1,5 @@
+{
+  "name": "Expo Go Builder AI",
+  "description": "AI-powered planner for building local-first Expo applications using Drizzle, SQLite, and NativeWind.",
+  "requestFramePermissions": ["microphone"]
+}
