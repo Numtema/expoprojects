@@ -15,6 +15,15 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<'architect' | 'studio'>('architect');
   const [history, setHistory] = useState<AppPlan[]>([]);
 
+  const [backendData, setBackendData] = useState<any>(null);
+
+  useEffect(() => {
+    fetch('/api/data')
+      .then(res => res.json())
+      .then(data => setBackendData(data))
+      .catch(err => console.error("Failed to fetch backend data", err));
+  }, []);
+
   const templates = [
     { id: 'saas', name: 'SaaS Starter', icon: <Layers className="w-4 h-4" />, prompt: 'A modern SaaS boilerplate with user management, subscriptions, and a dashboard.' },
     { id: 'ecommerce', name: 'E-commerce', icon: <Github className="w-4 h-4" />, prompt: 'A mobile-first e-commerce app with product listings, cart, and checkout.' },
@@ -72,10 +81,11 @@ export default function App() {
       <nav className="border-b border-stone-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3 cursor-pointer" onClick={reset}>
-            <div className="bg-stone-900 p-2 rounded-xl shadow-lg">
-              <Cpu className="w-6 h-6 text-white" />
+            <span className="font-mono font-black tracking-tighter text-2xl uppercase text-stone-900">ExpoGo.Builder</span>
+            <div className="hidden sm:flex items-center gap-1.5 px-2 py-1 bg-stone-100 rounded-lg border border-stone-200">
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-[9px] font-mono text-stone-500 uppercase font-bold tracking-tighter">Backend API Ready</span>
             </div>
-            <span className="font-mono font-black tracking-tighter text-2xl uppercase">ExpoGo.Builder</span>
           </div>
           
           {plan && (
@@ -120,10 +130,10 @@ export default function App() {
               className="space-y-16"
             >
               <div className="text-center space-y-6 px-6">
-                <h2 className="text-7xl font-sans font-black tracking-tighter text-stone-900 uppercase max-w-5xl mx-auto leading-[0.85]">
+                <h2 className="text-4xl sm:text-5xl md:text-7xl font-sans font-black tracking-tighter text-stone-900 uppercase max-w-5xl mx-auto leading-[0.9] sm:leading-[0.85]">
                   Architect <span className="text-stone-300 italic">&</span> Build your next <span className="text-stone-400">local-first</span> experience.
                 </h2>
-                <p className="text-stone-500 font-serif italic text-xl max-w-2xl mx-auto leading-relaxed">
+                <p className="text-stone-500 font-serif italic text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
                   A multi-agent system powered by Gemini 3.1 Pro that plans and generates full Expo projects.
                 </p>
               </div>
@@ -240,12 +250,18 @@ export default function App() {
       <footer className="border-t border-stone-200 py-16 mt-24 bg-white">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-12">
           <div className="space-y-3 text-center md:text-left">
-            <p className="text-lg font-mono font-black uppercase tracking-tighter">ExpoGo.Builder</p>
+            <p className="text-lg font-mono font-black uppercase tracking-tighter text-stone-900">ExpoGo.Builder</p>
             <p className="text-sm text-stone-400 font-serif italic max-w-sm leading-relaxed">
               Automating the architectural planning and code generation of local-first mobile applications.
             </p>
+            {backendData && (
+              <div className="mt-4 p-3 bg-stone-50 rounded-xl border border-stone-100 text-[10px] font-mono text-stone-400">
+                <span className="block uppercase font-bold text-stone-500 mb-1">Backend API Response:</span>
+                <pre className="whitespace-pre-wrap">{JSON.stringify(backendData, null, 2)}</pre>
+              </div>
+            )}
           </div>
-          <div className="flex items-center gap-12">
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-8 md:gap-12">
             <FooterLink label="Documentation" />
             <FooterLink label="Template Source" />
             <FooterLink label="AI Studio" />
