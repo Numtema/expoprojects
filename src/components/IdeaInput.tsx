@@ -74,16 +74,16 @@ export const IdeaInput: React.FC<IdeaInputProps> = ({ onGenerate, onStop, isLoad
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-6">
+    <div className="w-full max-w-4xl mx-auto p-4 sm:p-6">
       <form onSubmit={handleSubmit} className="relative">
-        <div className="bg-stone-200 p-3 rounded-[3rem] shadow-2xl">
+        <div className="bg-stone-200 p-2 sm:p-3 rounded-[2rem] sm:rounded-[3rem] shadow-2xl">
           <textarea
             value={idea}
             onChange={(e) => setIdea(e.target.value)}
             placeholder="app minimall todo list"
             className={cn(
-              "w-full min-h-[220px] p-10 rounded-[2.5rem] bg-white border-none shadow-inner transition-all duration-300",
-              "focus:ring-0 resize-none text-2xl font-sans leading-relaxed text-stone-800",
+              "w-full min-h-[180px] sm:min-h-[220px] p-6 sm:p-10 rounded-[1.5rem] sm:rounded-[2.5rem] bg-white border-none shadow-inner transition-all duration-300",
+              "focus:ring-0 resize-none text-xl sm:text-2xl font-sans leading-relaxed text-stone-800",
               "placeholder:text-stone-300"
             )}
             disabled={isLoading}
@@ -114,7 +114,7 @@ export const IdeaInput: React.FC<IdeaInputProps> = ({ onGenerate, onStop, isLoad
           </div>
         </div>
 
-        <div className="absolute bottom-10 right-10 flex items-center gap-4">
+        <div className="absolute bottom-6 sm:bottom-10 right-6 sm:right-10 flex items-center gap-2 sm:gap-4">
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
@@ -122,13 +122,13 @@ export const IdeaInput: React.FC<IdeaInputProps> = ({ onGenerate, onStop, isLoad
             onClick={isRecording ? stopRecording : startRecording}
             disabled={isLoading}
             className={cn(
-              "p-3 rounded-xl transition-all duration-300 shadow-sm",
+              "p-2.5 sm:p-3 rounded-xl transition-all duration-300 shadow-sm",
               isRecording 
                 ? "bg-rose-500 text-white animate-pulse" 
                 : "bg-stone-100 text-stone-500 hover:bg-stone-200"
             )}
           >
-            {isRecording ? <Square className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+            {isRecording ? <Square className="w-4 h-4 sm:w-5 sm:h-5" /> : <Mic className="w-4 h-4 sm:w-5 sm:h-5" />}
           </motion.button>
 
           <motion.button
@@ -138,7 +138,7 @@ export const IdeaInput: React.FC<IdeaInputProps> = ({ onGenerate, onStop, isLoad
             onClick={isLoading ? onStop : undefined}
             disabled={(!idea.trim() && !audioBlob) && !isLoading}
             className={cn(
-              "px-6 py-3 rounded-xl font-medium flex items-center gap-2 transition-all duration-300",
+              "px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-medium flex items-center gap-2 transition-all duration-300 text-sm sm:text-base",
               isLoading 
                 ? "bg-rose-100 text-rose-600 hover:bg-rose-200 border border-rose-200 shadow-lg" 
                 : (idea.trim() || audioBlob)
@@ -148,12 +148,12 @@ export const IdeaInput: React.FC<IdeaInputProps> = ({ onGenerate, onStop, isLoad
           >
             {isLoading ? (
               <>
-                <Square className="w-5 h-5 fill-current" />
+                <Square className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
                 Stop Planning
               </>
             ) : (
               <>
-                <Sparkles className="w-5 h-5" />
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
                 Generate Plan
               </>
             )}

@@ -257,25 +257,25 @@ export const AgentStudio: React.FC<AgentStudioProps> = ({ plan }) => {
 
   return (
     <div className="w-full max-w-7xl mx-auto p-6 space-y-12 pb-32">
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between border-b border-stone-200 pb-8 gap-8">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between border-b border-stone-200 pb-8 gap-6 sm:gap-8">
         <div className="flex items-center gap-4">
-          <div className="p-3 bg-stone-900 rounded-2xl shadow-xl">
-            <Bot className="w-8 h-8 text-white" />
+          <div className="p-2 sm:p-3 bg-stone-900 rounded-xl sm:rounded-2xl shadow-xl">
+            <Bot className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
           </div>
           <div>
-            <h2 className="text-3xl font-sans font-black uppercase tracking-tighter text-stone-900">Agent Team Studio</h2>
-            <p className="text-stone-500 font-serif italic">A specialized squad of AI agents collaborating to build your application.</p>
+            <h2 className="text-2xl sm:text-3xl font-sans font-black uppercase tracking-tighter text-stone-900">Agent Team Studio</h2>
+            <p className="text-xs sm:text-sm text-stone-500 font-serif italic">A specialized squad of AI agents collaborating to build your application.</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-3 sm:gap-4">
           {isBuilding ? (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 w-full sm:w-auto">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={togglePause}
-                className="flex items-center gap-2 px-6 py-4 bg-stone-200 text-stone-900 rounded-2xl font-mono text-sm uppercase tracking-widest shadow-lg hover:bg-stone-300 transition-all"
+                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 sm:px-6 py-3 sm:py-4 bg-stone-200 text-stone-900 rounded-xl sm:rounded-2xl font-mono text-xs sm:text-sm uppercase tracking-widest shadow-lg hover:bg-stone-300 transition-all"
               >
                 {isPaused ? <Play className="w-4 h-4 fill-current" /> : <Pause className="w-4 h-4 fill-current" />}
                 {isPaused ? "Resume" : "Pause"}
@@ -284,7 +284,7 @@ export const AgentStudio: React.FC<AgentStudioProps> = ({ plan }) => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={stopBuild}
-                className="flex items-center gap-2 px-6 py-4 bg-rose-100 text-rose-600 rounded-2xl font-mono text-sm uppercase tracking-widest shadow-lg hover:bg-rose-200 transition-all border border-rose-200"
+                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 sm:px-6 py-3 sm:py-4 bg-rose-100 text-rose-600 rounded-xl sm:rounded-2xl font-mono text-xs sm:text-sm uppercase tracking-widest shadow-lg hover:bg-rose-200 transition-all border border-rose-200"
               >
                 <Square className="w-4 h-4 fill-current" />
                 Stop
@@ -295,7 +295,7 @@ export const AgentStudio: React.FC<AgentStudioProps> = ({ plan }) => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={buildProject}
-              className="flex items-center gap-3 px-8 py-4 bg-stone-900 text-white rounded-2xl font-mono text-sm uppercase tracking-widest shadow-2xl hover:bg-stone-800 transition-all"
+              className="w-full sm:w-auto flex items-center justify-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-stone-900 text-white rounded-xl sm:rounded-2xl font-mono text-xs sm:text-sm uppercase tracking-widest shadow-2xl hover:bg-stone-800 transition-all"
             >
               <Zap className="w-5 h-5 fill-current" />
               Run Agents & Build
@@ -303,26 +303,26 @@ export const AgentStudio: React.FC<AgentStudioProps> = ({ plan }) => {
           )}
 
           {files.length > 0 && !isBuilding && (
-            <>
+            <div className="flex items-center gap-2 w-full sm:w-auto">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={exportAsZip}
-                className="flex items-center gap-3 px-8 py-4 bg-stone-900 text-white rounded-2xl font-mono text-sm uppercase tracking-widest shadow-2xl hover:bg-stone-800 transition-all"
+                className="flex-1 sm:flex-none flex items-center justify-center gap-3 px-4 sm:px-8 py-3 sm:py-4 bg-stone-900 text-white rounded-xl sm:rounded-2xl font-mono text-xs sm:text-sm uppercase tracking-widest shadow-2xl hover:bg-stone-800 transition-all"
               >
-                <Download className="w-5 h-5" />
-                Export ZIP
+                <Download className="w-4 h-4 sm:w-5 sm:h-5" />
+                ZIP
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={downloadProject}
-                className="flex items-center gap-3 px-8 py-4 bg-emerald-600 text-white rounded-2xl font-mono text-sm uppercase tracking-widest shadow-2xl hover:bg-emerald-700 transition-all"
+                className="flex-1 sm:flex-none flex items-center justify-center gap-3 px-4 sm:px-8 py-3 sm:py-4 bg-emerald-600 text-white rounded-xl sm:rounded-2xl font-mono text-xs sm:text-sm uppercase tracking-widest shadow-2xl hover:bg-emerald-700 transition-all"
               >
-                <Layers className="w-5 h-5" />
-                Export JSON
+                <Layers className="w-4 h-4 sm:w-5 sm:h-5" />
+                JSON
               </motion.button>
-            </>
+            </div>
           )}
         </div>
       </div>
@@ -356,9 +356,9 @@ export const AgentStudio: React.FC<AgentStudioProps> = ({ plan }) => {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
         {/* Left Sidebar: Logs & Chat */}
-        <div className="lg:col-span-4 space-y-8">
+        <div className="lg:col-span-4 space-y-6 sm:space-y-8">
           {/* Chat Interface */}
-          <div className="bg-white border border-stone-200 rounded-[2rem] shadow-xl overflow-hidden flex flex-col h-[500px]">
+          <div className="bg-white border border-stone-200 rounded-[1.5rem] sm:rounded-[2rem] shadow-xl overflow-hidden flex flex-col h-[400px] sm:h-[500px]">
             <div className="p-5 border-b border-stone-100 bg-stone-50 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-stone-900 rounded-full flex items-center justify-center">
@@ -461,29 +461,29 @@ export const AgentStudio: React.FC<AgentStudioProps> = ({ plan }) => {
 
         {/* Main Content: File Explorer / Preview */}
         <div className="lg:col-span-8 space-y-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-6">
-              <h3 className="text-xs font-mono font-black uppercase tracking-widest text-stone-400 flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-4 sm:gap-6">
+              <h3 className="text-[10px] sm:text-xs font-mono font-black uppercase tracking-widest text-stone-400 flex items-center gap-2">
                 <Terminal className="w-3 h-3" />
                 Project Workspace
               </h3>
-              <div className="h-4 w-px bg-stone-200" />
-              <div className="flex items-center gap-2 text-[10px] font-mono text-stone-400">
+              <div className="h-4 w-px bg-stone-200 hidden sm:block" />
+              <div className="flex items-center gap-2 text-[9px] sm:text-[10px] font-mono text-stone-400">
                 <Smartphone className="w-3 h-3" />
-                Live Preview (Simulated)
+                Live Preview
               </div>
             </div>
             {currentFile && (
-              <div className="flex items-center gap-2 text-[10px] font-mono text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
+              <div className="flex items-center gap-2 text-[9px] sm:text-[10px] font-mono text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100 w-fit">
                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
-                GENERATING: {currentFile}
+                GENERATING: {currentFile.split('/').pop()}
               </div>
             )}
           </div>
 
-          <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
+          <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 sm:gap-8">
             {/* Code Editor */}
-            <div className="xl:col-span-8 bg-white border border-stone-200 rounded-[2.5rem] overflow-hidden shadow-xl min-h-[600px] flex flex-col">
+            <div className="xl:col-span-8 bg-white border border-stone-200 rounded-[1.5rem] sm:rounded-[2.5rem] overflow-hidden shadow-xl min-h-[400px] sm:min-h-[600px] flex flex-col">
               {files.length === 0 && !isBuilding ? (
                 <div className="flex-1 flex flex-col items-center justify-center p-12 text-center space-y-6">
                   <div className="p-8 bg-stone-50 rounded-full">
@@ -531,17 +531,17 @@ export const AgentStudio: React.FC<AgentStudioProps> = ({ plan }) => {
 
             {/* Simulated Phone Preview */}
             <div className="xl:col-span-4 flex flex-col items-center">
-              <div className="relative w-[280px] h-[580px] bg-stone-900 rounded-[3rem] border-[8px] border-stone-800 shadow-2xl overflow-hidden">
+              <div className="relative w-[240px] sm:w-[280px] h-[500px] sm:h-[580px] bg-stone-900 rounded-[2.5rem] sm:rounded-[3rem] border-[6px] sm:border-[8px] border-stone-800 shadow-2xl overflow-hidden">
                 {/* Notch */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-stone-800 rounded-b-2xl z-20" />
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 sm:w-32 h-5 sm:h-6 bg-stone-800 rounded-b-2xl z-20" />
                 
                 <div className="absolute inset-0 bg-white flex flex-col">
                   {/* Status Bar */}
-                  <div className="h-10 bg-white flex items-center justify-between px-6 pt-4">
-                    <span className="text-[10px] font-bold">9:41</span>
+                  <div className="h-8 sm:h-10 bg-white flex items-center justify-between px-4 sm:px-6 pt-3 sm:pt-4">
+                    <span className="text-[8px] sm:text-[10px] font-bold">9:41</span>
                     <div className="flex gap-1">
-                      <div className="w-3 h-3 rounded-full bg-stone-200" />
-                      <div className="w-3 h-3 rounded-full bg-stone-200" />
+                      <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-stone-200" />
+                      <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-stone-200" />
                     </div>
                   </div>
 
