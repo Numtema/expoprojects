@@ -20,7 +20,10 @@ import {
   Paperclip,
   FileText,
   X,
-  Smartphone
+  Smartphone,
+  Pause,
+  Play,
+  Square
 } from 'lucide-react';
 import { AppPlan, ProjectFile } from '../types';
 import { 
@@ -33,6 +36,7 @@ import {
 import { cn } from '../lib/utils';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import { useRef } from 'react';
 
 interface ChatMessage {
   role: 'user' | 'agent';
@@ -47,6 +51,10 @@ interface AgentStudioProps {
 export const AgentStudio: React.FC<AgentStudioProps> = ({ plan }) => {
   const [files, setFiles] = useState<ProjectFile[]>([]);
   const [isBuilding, setIsBuilding] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isStopped, setIsStopped] = useState(false);
+  const isStoppedRef = useRef(false);
+  const isPausedRef = useRef(false);
   const [currentFile, setCurrentFile] = useState<string | null>(null);
   const [logs, setLogs] = useState<string[]>([]);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
@@ -57,6 +65,13 @@ export const AgentStudio: React.FC<AgentStudioProps> = ({ plan }) => {
 
   const addLog = (msg: string) => {
     setLogs(prev => [...prev.slice(-10), `[${new Date().toLocaleTimeString()}] ${msg}`]);
+  };
+
+  const checkPause = async () => {
+    while (isPausedRef.current) {
+      if (isStoppedRef.current) break;
+      await new Promise(resolve => setTimeout(resolve, 500));
+    }
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,6 +115,10 @@ export const AgentStudio: React.FC<AgentStudioProps> = ({ plan }) => {
 
   const buildProject = async () => {
     setIsBuilding(true);
+    setIsPaused(false);
+    setIsStopped(false);
+    isStoppedRef.current = false;
+    isPausedRef.current = false;
     setFiles([]);
     setLogs([]);
     addLog("Initializing Agent Team Studio...");
@@ -118,6 +137,10 @@ export const AgentStudio: React.FC<AgentStudioProps> = ({ plan }) => {
     ];
 
     for (const path of filesToGenerate) {
+      if (isStoppedRef.current) break;
+      await checkPause();
+      if (isStoppedRef.current) break;
+
       setCurrentFile(path);
       addLog(`Agent 2 (Coder) implementing: ${path}`);
       try {
@@ -133,34 +156,72 @@ export const AgentStudio: React.FC<AgentStudioProps> = ({ plan }) => {
       }
     }
 
-    // New Agents
-    try {
-      addLog("Agent 3 (UI Designer) crafting theme & style...");
-      const twConfig = await generateTailwindConfig(plan);
-      setFiles(prev => [...prev, { path: 'tailwind.config.ts', content: twConfig }]);
-      addLog("Tailwind configuration successfully implemented.");
+    if (!isStoppedRef.current) {
+      // New Agents
+      try {
+        await checkPause();
+        if (isStoppedRef.current) throw new Error("Stopped");
+        
+        addLog("Agent 3 (UI Designer) crafting theme & style...");
+        const twConfig = await generateTailwindConfig(plan);
+        setFiles(prev => [...prev, { path: 'tailwind.config.ts', content: twConfig }]);
+        addLog("Tailwind configuration successfully implemented.");
 
-      addLog("Agent 4 (QA Engineer) writing test suites...");
-      const tests = await generateTests(plan);
-      setFiles(prev => [...prev, ...tests]);
-      addLog(`${tests.length} test files successfully implemented.`);
+        await checkPause();
+        if (isStoppedRef.current) throw new Error("Stopped");
 
-      addLog("Agent 5 (DevOps Specialist) configuring CI/CD & deployment...");
-      const devops = await generateDevOpsConfigs(plan);
-      setFiles(prev => [...prev, ...devops]);
-      addLog("Deployment configurations successfully implemented.");
+        addLog("Agent 4 (QA Engineer) writing test suites...");
+        const tests = await generateTests(plan);
+        setFiles(prev => [...prev, ...tests]);
+        addLog(`${tests.length} test files successfully implemented.`);
 
-      addLog("Agent 6 (Technical Writer) drafting project documentation...");
-      const readme = await generateReadme(plan);
-      setFiles(prev => [...prev, { path: 'README.md', content: readme }]);
-      addLog("README.md successfully implemented.");
-    } catch (err) {
-      addLog(`Error in post-processing agents: ${err}`);
+        await checkPause();
+        if (isStoppedRef.current) throw new Error("Stopped");
+
+        addLog("Agent 5 (DevOps Specialist) configuring CI/CD & deployment...");
+        const devops = await generateDevOpsConfigs(plan);
+        setFiles(prev => [...prev, ...devops]);
+        addLog("Deployment configurations successfully implemented.");
+
+        await checkPause();
+        if (isStoppedRef.current) throw new Error("Stopped");
+
+        addLog("Agent 6 (Technical Writer) drafting project documentation...");
+        const readme = await generateReadme(plan);
+        setFiles(prev => [...prev, { path: 'README.md', content: readme }]);
+        addLog("README.md successfully implemented.");
+      } catch (err) {
+        if (err instanceof Error && err.message === "Stopped") {
+          addLog("Build stopped by user.");
+        } else {
+          addLog(`Error in post-processing agents: ${err}`);
+        }
+      }
     }
 
     setIsBuilding(false);
+    setIsPaused(false);
     setCurrentFile(null);
-    addLog("Project build complete. Your specialized agent team has successfully finished the task.");
+    if (isStoppedRef.current) {
+      addLog("Project build stopped.");
+    } else {
+      addLog("Project build complete. Your specialized agent team has successfully finished the task.");
+    }
+  };
+
+  const togglePause = () => {
+    const nextPaused = !isPaused;
+    setIsPaused(nextPaused);
+    isPausedRef.current = nextPaused;
+    addLog(nextPaused ? "Build paused." : "Build resumed.");
+  };
+
+  const stopBuild = () => {
+    setIsStopped(true);
+    isStoppedRef.current = true;
+    setIsPaused(false);
+    isPausedRef.current = false;
+    addLog("Stopping build process...");
   };
 
   const exportAsZip = async () => {
@@ -208,7 +269,28 @@ export const AgentStudio: React.FC<AgentStudioProps> = ({ plan }) => {
         </div>
 
         <div className="flex items-center gap-4">
-          {!isBuilding && files.length === 0 && (
+          {isBuilding ? (
+            <div className="flex items-center gap-2">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={togglePause}
+                className="flex items-center gap-2 px-6 py-4 bg-stone-200 text-stone-900 rounded-2xl font-mono text-sm uppercase tracking-widest shadow-lg hover:bg-stone-300 transition-all"
+              >
+                {isPaused ? <Play className="w-4 h-4 fill-current" /> : <Pause className="w-4 h-4 fill-current" />}
+                {isPaused ? "Resume" : "Pause"}
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={stopBuild}
+                className="flex items-center gap-2 px-6 py-4 bg-rose-100 text-rose-600 rounded-2xl font-mono text-sm uppercase tracking-widest shadow-lg hover:bg-rose-200 transition-all border border-rose-200"
+              >
+                <Square className="w-4 h-4 fill-current" />
+                Stop
+              </motion.button>
+            </div>
+          ) : files.length === 0 && (
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

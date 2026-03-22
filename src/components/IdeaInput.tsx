@@ -73,37 +73,38 @@ export const IdeaInput: React.FC<IdeaInputProps> = ({ onGenerate, isLoading }) =
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-6">
+    <div className="w-full max-w-4xl mx-auto p-6">
       <form onSubmit={handleSubmit} className="relative">
-        <textarea
-          value={idea}
-          onChange={(e) => setIdea(e.target.value)}
-          placeholder="Describe your app idea (e.g., 'A local-first plant watering tracker with reminders and photo logs')... Our agent team will handle the rest."
-          className={cn(
-            "w-full min-h-[160px] p-6 rounded-2xl bg-white border-2 border-stone-200 shadow-sm transition-all duration-300",
-            "focus:border-stone-800 focus:ring-0 resize-none text-lg font-sans leading-relaxed",
-            "placeholder:text-stone-400"
-          )}
-          disabled={isLoading}
-        />
+        <div className="bg-stone-200 p-3 rounded-[3rem] shadow-2xl">
+          <textarea
+            value={idea}
+            onChange={(e) => setIdea(e.target.value)}
+            placeholder="app minimall todo list"
+            className={cn(
+              "w-full min-h-[220px] p-10 rounded-[2.5rem] bg-white border-none shadow-inner transition-all duration-300",
+              "focus:ring-0 resize-none text-2xl font-sans leading-relaxed text-stone-800",
+              "placeholder:text-stone-300"
+            )}
+            disabled={isLoading}
+          />
+        </div>
         
-        {/* Style Selector */}
-        <div className="mt-6 space-y-3">
-          <div className="flex items-center gap-2 text-[10px] font-mono font-black uppercase tracking-widest text-stone-400">
-            <Palette className="w-3 h-3" />
+        <div className="mt-8 space-y-4">
+          <div className="flex items-center gap-3 text-[11px] font-mono font-black uppercase tracking-[0.2em] text-stone-400">
+            <Palette className="w-4 h-4" />
             Visual Aesthetic
           </div>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-4">
             {styles.map(s => (
               <button
                 key={s.id}
                 type="button"
                 onClick={() => setSelectedStyle(s.id as any)}
                 className={cn(
-                  "px-4 py-2 rounded-xl text-[10px] font-mono font-bold uppercase tracking-widest transition-all border",
+                  "px-6 py-3 rounded-2xl text-[11px] font-mono font-bold uppercase tracking-widest transition-all border-2",
                   selectedStyle === s.id 
-                    ? "bg-stone-900 text-white border-stone-900 shadow-md" 
-                    : "bg-white text-stone-400 border-stone-200 hover:border-stone-400"
+                    ? "bg-stone-900 text-white border-stone-900 shadow-xl scale-105" 
+                    : "bg-white text-stone-400 border-stone-100 hover:border-stone-300"
                 )}
               >
                 {s.name}
@@ -112,7 +113,7 @@ export const IdeaInput: React.FC<IdeaInputProps> = ({ onGenerate, isLoading }) =
           </div>
         </div>
 
-        <div className="absolute bottom-4 right-4 flex items-center gap-3">
+        <div className="absolute bottom-10 right-10 flex items-center gap-4">
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}

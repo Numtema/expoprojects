@@ -129,13 +129,18 @@ export default function App() {
               exit={{ opacity: 0, y: -20 }}
               className="space-y-16"
             >
-              <div className="text-center space-y-6 px-6">
-                <h2 className="text-4xl sm:text-5xl md:text-7xl font-sans font-black tracking-tighter text-stone-900 uppercase max-w-5xl mx-auto leading-[0.9] sm:leading-[0.85]">
-                  Architect <span className="text-stone-300 italic">&</span> Build your next <span className="text-stone-400">local-first</span> experience.
+              <div className="text-center space-y-0 px-6 relative pt-12">
+                <h2 className="text-[12vw] md:text-[10vw] font-sans font-black tracking-tighter text-stone-900 uppercase max-w-7xl mx-auto leading-[0.8] flex flex-col items-center">
+                  <span className="block">ARCHITECT <span className="text-stone-300">&</span> BUILD YOUR</span>
+                  <span className="block">NEXT <span className="text-stone-300">LOCAL-FIRST</span></span>
+                  <span className="block">EXPERIENCE.</span>
                 </h2>
-                <p className="text-stone-500 font-serif italic text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
-                  A multi-agent system powered by Gemini 3.1 Pro that plans and generates full Expo projects.
-                </p>
+                <div className="relative mt-12">
+                  <div className="absolute -top-6 left-1/2 -translate-x-[180px] w-12 h-2 bg-blue-500 rounded-full hidden md:block" />
+                  <p className="text-stone-400 font-serif italic text-xl md:text-3xl max-w-4xl mx-auto leading-relaxed">
+                    A multi-agent system powered by Gemini 3.1 Pro that plans and generates full Expo projects.
+                  </p>
+                </div>
               </div>
 
               <IdeaInput onGenerate={handleGenerate} isLoading={isLoading} />
