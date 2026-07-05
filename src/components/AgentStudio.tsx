@@ -257,36 +257,36 @@ export const AgentStudio: React.FC<AgentStudioProps> = ({ plan }) => {
 
   return (
     <div className="w-full max-w-7xl mx-auto p-6 space-y-12 pb-32">
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between border-b border-stone-200 pb-8 gap-6 sm:gap-8">
-        <div className="flex items-center gap-4">
-          <div className="p-2 sm:p-3 bg-stone-900 rounded-xl sm:rounded-2xl shadow-xl">
-            <Bot className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between border-b border-stone-200 pb-4 sm:pb-8 gap-4 sm:gap-8">
+        <div className="flex items-center gap-3 sm:gap-4">
+          <div className="p-1.5 sm:p-3 bg-stone-900 rounded-lg sm:rounded-2xl shadow-xl">
+            <Bot className="w-5 h-5 sm:w-8 sm:h-8 text-white" />
           </div>
           <div>
-            <h2 className="text-2xl sm:text-3xl font-sans font-black uppercase tracking-tighter text-stone-900">Agent Team Studio</h2>
-            <p className="text-xs sm:text-sm text-stone-500 font-serif italic">A specialized squad of AI agents collaborating to build your application.</p>
+            <h2 className="text-xl sm:text-3xl font-sans font-black uppercase tracking-tighter text-stone-900">Agent Studio</h2>
+            <p className="text-[10px] sm:text-sm text-stone-500 font-serif italic">AI agents collaborating to build your app.</p>
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-4">
           {isBuilding ? (
             <div className="flex items-center gap-2 w-full sm:w-auto">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={togglePause}
-                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 sm:px-6 py-3 sm:py-4 bg-stone-200 text-stone-900 rounded-xl sm:rounded-2xl font-mono text-xs sm:text-sm uppercase tracking-widest shadow-lg hover:bg-stone-300 transition-all"
+                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-3 sm:px-6 py-2.5 sm:py-4 bg-stone-200 text-stone-900 rounded-lg sm:rounded-2xl font-mono text-[10px] sm:text-sm uppercase tracking-widest shadow-lg hover:bg-stone-300 transition-all"
               >
-                {isPaused ? <Play className="w-4 h-4 fill-current" /> : <Pause className="w-4 h-4 fill-current" />}
+                {isPaused ? <Play className="w-3 h-3 sm:w-4 sm:h-4 fill-current" /> : <Pause className="w-3 h-3 sm:w-4 sm:h-4 fill-current" />}
                 {isPaused ? "Resume" : "Pause"}
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={stopBuild}
-                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 sm:px-6 py-3 sm:py-4 bg-rose-100 text-rose-600 rounded-xl sm:rounded-2xl font-mono text-xs sm:text-sm uppercase tracking-widest shadow-lg hover:bg-rose-200 transition-all border border-rose-200"
+                className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-3 sm:px-6 py-2.5 sm:py-4 bg-rose-100 text-rose-600 rounded-lg sm:rounded-2xl font-mono text-[10px] sm:text-sm uppercase tracking-widest shadow-lg hover:bg-rose-200 transition-all border border-rose-200"
               >
-                <Square className="w-4 h-4 fill-current" />
+                <Square className="w-3 h-3 sm:w-4 sm:h-4 fill-current" />
                 Stop
               </motion.button>
             </div>
@@ -295,10 +295,10 @@ export const AgentStudio: React.FC<AgentStudioProps> = ({ plan }) => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={buildProject}
-              className="w-full sm:w-auto flex items-center justify-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-stone-900 text-white rounded-xl sm:rounded-2xl font-mono text-xs sm:text-sm uppercase tracking-widest shadow-2xl hover:bg-stone-800 transition-all"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-8 py-2.5 sm:py-4 bg-stone-900 text-white rounded-lg sm:rounded-2xl font-mono text-[10px] sm:text-sm uppercase tracking-widest shadow-2xl hover:bg-stone-800 transition-all"
             >
-              <Zap className="w-5 h-5 fill-current" />
-              Run Agents & Build
+              <Zap className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
+              Build App
             </motion.button>
           )}
 
@@ -308,18 +308,18 @@ export const AgentStudio: React.FC<AgentStudioProps> = ({ plan }) => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={exportAsZip}
-                className="flex-1 sm:flex-none flex items-center justify-center gap-3 px-4 sm:px-8 py-3 sm:py-4 bg-stone-900 text-white rounded-xl sm:rounded-2xl font-mono text-xs sm:text-sm uppercase tracking-widest shadow-2xl hover:bg-stone-800 transition-all"
+                className="flex-1 sm:flex-none flex items-center justify-center gap-2 sm:gap-3 px-3 sm:px-8 py-2.5 sm:py-4 bg-stone-900 text-white rounded-lg sm:rounded-2xl font-mono text-[10px] sm:text-sm uppercase tracking-widest shadow-2xl hover:bg-stone-800 transition-all"
               >
-                <Download className="w-4 h-4 sm:w-5 sm:h-5" />
+                <Download className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
                 ZIP
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={downloadProject}
-                className="flex-1 sm:flex-none flex items-center justify-center gap-3 px-4 sm:px-8 py-3 sm:py-4 bg-emerald-600 text-white rounded-xl sm:rounded-2xl font-mono text-xs sm:text-sm uppercase tracking-widest shadow-2xl hover:bg-emerald-700 transition-all"
+                className="flex-1 sm:flex-none flex items-center justify-center gap-2 sm:gap-3 px-3 sm:px-8 py-2.5 sm:py-4 bg-emerald-600 text-white rounded-lg sm:rounded-2xl font-mono text-[10px] sm:text-sm uppercase tracking-widest shadow-2xl hover:bg-emerald-700 transition-all"
               >
-                <Layers className="w-4 h-4 sm:w-5 sm:h-5" />
+                <Layers className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
                 JSON
               </motion.button>
             </div>
@@ -328,13 +328,13 @@ export const AgentStudio: React.FC<AgentStudioProps> = ({ plan }) => {
       </div>
 
       {/* Agent Team Section */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        <AgentCard icon={<Cpu className="w-4 h-4" />} name="Architect" role="Planning" active={isBuilding && logs.some(l => l.includes("Agent 1"))} />
-        <AgentCard icon={<Code className="w-4 h-4" />} name="Coder" role="Generation" active={isBuilding && logs.some(l => l.includes("Agent 2"))} />
-        <AgentCard icon={<Palette className="w-4 h-4" />} name="UI Designer" role="Styling" active={isBuilding && logs.some(l => l.includes("Agent 3"))} />
-        <AgentCard icon={<CheckCircle2 className="w-4 h-4" />} name="QA Engineer" role="Testing" active={isBuilding && logs.some(l => l.includes("Agent 4"))} />
-        <AgentCard icon={<Zap className="w-4 h-4" />} name="DevOps" role="Deployment" active={isBuilding && logs.some(l => l.includes("Agent 5"))} />
-        <AgentCard icon={<BookOpen className="w-4 h-4" />} name="Writer" role="Docs" active={isBuilding && logs.some(l => l.includes("Agent 6"))} />
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+        <AgentCard icon={<Cpu className="w-3.5 h-3.5 sm:w-4 sm:h-4" />} name="Architect" role="Planning" active={isBuilding && logs.some(l => l.includes("Agent 1"))} />
+        <AgentCard icon={<Code className="w-3.5 h-3.5 sm:w-4 sm:h-4" />} name="Coder" role="Generation" active={isBuilding && logs.some(l => l.includes("Agent 2"))} />
+        <AgentCard icon={<Palette className="w-3.5 h-3.5 sm:w-4 sm:h-4" />} name="UI Designer" role="Styling" active={isBuilding && logs.some(l => l.includes("Agent 3"))} />
+        <AgentCard icon={<CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />} name="QA Engineer" role="Testing" active={isBuilding && logs.some(l => l.includes("Agent 4"))} />
+        <AgentCard icon={<Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4" />} name="DevOps" role="Deployment" active={isBuilding && logs.some(l => l.includes("Agent 5"))} />
+        <AgentCard icon={<BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4" />} name="Writer" role="Docs" active={isBuilding && logs.some(l => l.includes("Agent 6"))} />
       </div>
 
       {/* Dependencies Section */}
@@ -593,26 +593,26 @@ export const AgentStudio: React.FC<AgentStudioProps> = ({ plan }) => {
 
 const AgentCard = ({ icon, name, role, active }: { icon: React.ReactNode, name: string, role: string, active: boolean }) => (
   <div className={cn(
-    "p-4 rounded-2xl border transition-all duration-500 flex flex-col items-center text-center gap-2",
+    "p-3 sm:p-4 rounded-xl sm:rounded-2xl border transition-all duration-500 flex flex-col items-center text-center gap-1.5 sm:gap-2",
     active 
-      ? "bg-stone-900 border-stone-900 shadow-xl scale-105" 
+      ? "bg-stone-900 border-stone-900 shadow-xl scale-[1.02] sm:scale-105" 
       : "bg-white border-stone-100 opacity-50"
   )}>
     <div className={cn(
-      "p-2 rounded-xl",
+      "p-1.5 sm:p-2 rounded-lg sm:rounded-xl",
       active ? "bg-stone-800 text-emerald-400" : "bg-stone-50 text-stone-400"
     )}>
       {icon}
     </div>
-    <div>
-      <p className={cn("text-[10px] font-mono font-black uppercase tracking-widest", active ? "text-white" : "text-stone-900")}>{name}</p>
-      <p className={cn("text-[8px] font-mono uppercase opacity-50", active ? "text-stone-400" : "text-stone-400")}>{role}</p>
+    <div className="min-w-0 w-full">
+      <p className={cn("text-[9px] sm:text-[10px] font-mono font-black uppercase tracking-widest truncate", active ? "text-white" : "text-stone-900")}>{name}</p>
+      <p className={cn("text-[7px] sm:text-[8px] font-mono uppercase opacity-50 truncate", active ? "text-stone-400" : "text-stone-400")}>{role}</p>
     </div>
     {active && (
-      <div className="flex gap-1">
-        <div className="w-1 h-1 rounded-full bg-emerald-500 animate-bounce" style={{ animationDelay: '0ms' }} />
-        <div className="w-1 h-1 rounded-full bg-emerald-500 animate-bounce" style={{ animationDelay: '150ms' }} />
-        <div className="w-1 h-1 rounded-full bg-emerald-500 animate-bounce" style={{ animationDelay: '300ms' }} />
+      <div className="flex gap-0.5 sm:gap-1">
+        <div className="w-0.5 h-0.5 sm:w-1 sm:h-1 rounded-full bg-emerald-500 animate-bounce" style={{ animationDelay: '0ms' }} />
+        <div className="w-0.5 h-0.5 sm:w-1 sm:h-1 rounded-full bg-emerald-500 animate-bounce" style={{ animationDelay: '150ms' }} />
+        <div className="w-0.5 h-0.5 sm:w-1 sm:h-1 rounded-full bg-emerald-500 animate-bounce" style={{ animationDelay: '300ms' }} />
       </div>
     )}
   </div>

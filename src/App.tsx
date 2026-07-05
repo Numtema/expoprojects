@@ -140,17 +140,17 @@ export default function App() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="space-y-16"
+              className="space-y-10 sm:space-y-12"
             >
-              <div className="text-center space-y-0 px-4 sm:px-6 relative pt-8 md:pt-12">
-                <h2 className="text-[14vw] sm:text-[12vw] md:text-[10vw] font-sans font-black tracking-tighter text-stone-900 uppercase max-w-7xl mx-auto leading-[0.8] flex flex-col items-center">
+               <div className="text-center space-y-0 px-4 sm:px-6 relative pt-4 md:pt-8">
+                <h2 className="text-[10vw] sm:text-[7vw] md:text-5xl lg:text-6xl xl:text-7xl font-sans font-black tracking-tighter text-stone-900 uppercase max-w-5xl mx-auto leading-[0.9] sm:leading-[0.9] flex flex-col items-center">
                   <span className="block">ARCHITECT <span className="text-stone-300">&</span> BUILD YOUR</span>
                   <span className="block">NEXT <span className="text-stone-300">LOCAL-FIRST</span></span>
                   <span className="block">EXPERIENCE.</span>
                 </h2>
-                <div className="relative mt-8 md:mt-12">
-                  <div className="absolute -top-4 md:-top-6 left-1/2 -translate-x-1/2 md:-translate-x-[180px] w-8 md:w-12 h-1.5 md:h-2 bg-blue-500 rounded-full" />
-                  <p className="text-stone-400 font-serif italic text-lg sm:text-xl md:text-3xl max-w-4xl mx-auto leading-relaxed px-4">
+                <div className="relative mt-6 md:mt-10">
+                  <div className="absolute -top-3 md:-top-5 left-1/2 -translate-x-1/2 md:-translate-x-[140px] w-6 md:w-10 h-1 md:h-1.5 bg-blue-500 rounded-full" />
+                  <p className="text-stone-400 font-serif italic text-base sm:text-lg md:text-xl max-w-3xl mx-auto leading-relaxed px-2 sm:px-4">
                     A multi-agent system powered by Gemini 3.1 Pro that plans and generates full Expo projects.
                   </p>
                 </div>
@@ -158,21 +158,21 @@ export default function App() {
 
               <IdeaInput onGenerate={handleGenerate} onStop={stopGeneration} isLoading={isLoading} />
 
-              <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 px-6">
+              <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 px-4 sm:px-6">
                 {templates.map(t => (
                   <motion.button
                     key={t.id}
                     whileHover={{ scale: 1.02, y: -4 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => handleGenerate(t.prompt)}
-                    className="p-8 bg-white border border-stone-200 rounded-[2rem] text-left space-y-4 shadow-sm hover:border-stone-400 transition-all group"
+                    className="p-6 sm:p-8 bg-white border border-stone-200 rounded-[1.5rem] sm:rounded-[2rem] text-left space-y-3 sm:space-y-4 shadow-sm hover:border-stone-400 transition-all group"
                   >
-                    <div className="p-3 bg-stone-50 rounded-xl w-fit group-hover:bg-stone-900 group-hover:text-white transition-colors">
+                    <div className="p-2 sm:p-3 bg-stone-50 rounded-xl w-fit group-hover:bg-stone-900 group-hover:text-white transition-colors">
                       {t.icon}
                     </div>
                     <div className="space-y-1">
-                      <h4 className="font-mono font-black uppercase tracking-widest text-xs text-stone-900">{t.name}</h4>
-                      <p className="text-[10px] text-stone-400 font-serif italic leading-relaxed">{t.prompt}</p>
+                      <h4 className="font-mono font-black uppercase tracking-widest text-[10px] sm:text-xs text-stone-900">{t.name}</h4>
+                      <p className="text-[9px] sm:text-[10px] text-stone-400 font-serif italic leading-relaxed">{t.prompt}</p>
                     </div>
                   </motion.button>
                 ))}
@@ -188,7 +188,7 @@ export default function App() {
               )}
 
               {/* Features Grid */}
-              <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 pt-12">
+              <div className="max-w-5xl mx-auto px-4 sm:px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 pt-6 sm:pt-8">
                 <FeatureCard 
                   title="Architect Agent" 
                   desc="Plans your data schema, navigation structure, and implementation roadmap."
@@ -294,25 +294,25 @@ const NavTab = ({ active, onClick, icon, label }: { active: boolean, onClick: ()
   <button 
     onClick={onClick}
     className={cn(
-      "flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-mono font-bold uppercase tracking-widest transition-all",
+      "flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-mono font-bold uppercase tracking-widest transition-all",
       active ? "bg-stone-900 text-white shadow-lg" : "text-stone-400 hover:text-stone-600"
     )}
   >
     {icon}
-    {label}
+    <span className="hidden sm:inline">{label}</span>
   </button>
 );
 
 const FeatureCard = ({ title, desc }: { title: string, desc: string }) => (
-  <div className="p-10 bg-white border border-stone-200 rounded-[2rem] shadow-sm space-y-6 hover:border-stone-400 transition-all duration-500 group">
-    <div className="w-12 h-12 bg-stone-50 rounded-2xl flex items-center justify-center text-stone-400 group-hover:bg-stone-900 group-hover:text-white transition-all duration-500">
-      <Cpu className="w-6 h-6" />
+  <div className="p-6 sm:p-10 bg-white border border-stone-200 rounded-[1.5rem] sm:rounded-[2rem] shadow-sm space-y-4 sm:space-y-6 hover:border-stone-400 transition-all duration-500 group">
+    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-stone-50 rounded-xl sm:rounded-2xl flex items-center justify-center text-stone-400 group-hover:bg-stone-900 group-hover:text-white transition-all duration-500">
+      <Cpu className="w-5 h-5 sm:w-6 sm:h-6" />
     </div>
-    <div className="space-y-3">
-      <h3 className="text-xs font-mono font-black uppercase tracking-[0.2em] text-stone-400 group-hover:text-stone-900 transition-colors">
+    <div className="space-y-2 sm:space-y-3">
+      <h3 className="text-[10px] sm:text-xs font-mono font-black uppercase tracking-[0.2em] text-stone-400 group-hover:text-stone-900 transition-colors">
         {title}
       </h3>
-      <p className="text-stone-500 text-sm leading-relaxed font-serif italic">
+      <p className="text-stone-500 text-xs sm:text-sm leading-relaxed font-serif italic">
         {desc}
       </p>
     </div>
