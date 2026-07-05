@@ -26,6 +26,7 @@ import {
   Square
 } from 'lucide-react';
 import { AppPlan, ProjectFile } from '../types';
+import { ExpoSnackPreview } from './ExpoSnackPreview';
 import { 
   generateFileContent, 
   generateReadme, 
@@ -529,60 +530,57 @@ export const AgentStudio: React.FC<AgentStudioProps> = ({ plan }) => {
               )}
             </div>
 
-            {/* Simulated Phone Preview */}
-            <div className="xl:col-span-4 flex flex-col items-center">
-              <div className="relative w-[240px] sm:w-[280px] h-[500px] sm:h-[580px] bg-stone-900 rounded-[2.5rem] sm:rounded-[3rem] border-[6px] sm:border-[8px] border-stone-800 shadow-2xl overflow-hidden">
-                {/* Notch */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 sm:w-32 h-5 sm:h-6 bg-stone-800 rounded-b-2xl z-20" />
-                
-                <div className="absolute inset-0 bg-white flex flex-col">
-                  {/* Status Bar */}
-                  <div className="h-8 sm:h-10 bg-white flex items-center justify-between px-4 sm:px-6 pt-3 sm:pt-4">
-                    <span className="text-[8px] sm:text-[10px] font-bold">9:41</span>
-                    <div className="flex gap-1">
-                      <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-stone-200" />
-                      <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-stone-200" />
-                    </div>
-                  </div>
-
-                  {/* App Content Mock */}
-                  <div className="flex-1 p-6 space-y-6">
-                    <div className="h-8 w-3/4 bg-stone-100 rounded-lg animate-pulse" />
-                    <div className="aspect-square bg-stone-50 rounded-2xl border border-stone-100 flex items-center justify-center">
-                      {isBuilding ? (
-                        <div className="flex flex-col items-center gap-3">
-                          <Loader2 className="w-8 h-8 text-stone-200 animate-spin" />
-                          <span className="text-[8px] font-mono text-stone-300 uppercase tracking-widest">Building UI...</span>
+            {/* Simulated Phone Preview or Live Expo Snack */}
+            <div className="xl:col-span-4 flex flex-col items-center w-full h-full">
+              {!isBuilding && files.length > 0 ? (
+                <ExpoSnackPreview files={files} dependencies={plan.dependencies || []} />
+              ) : (
+                <>
+                  <div className="relative w-[240px] sm:w-[280px] h-[500px] sm:h-[580px] bg-stone-900 rounded-[2.5rem] sm:rounded-[3rem] border-[6px] sm:border-[8px] border-stone-800 shadow-2xl overflow-hidden">
+                    {/* Notch */}
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 sm:w-32 h-5 sm:h-6 bg-stone-800 rounded-b-2xl z-20" />
+                    
+                    <div className="absolute inset-0 bg-white flex flex-col">
+                      {/* Status Bar */}
+                      <div className="h-8 sm:h-10 bg-white flex items-center justify-between px-4 sm:px-6 pt-3 sm:pt-4">
+                        <span className="text-[8px] sm:text-[10px] font-bold">9:41</span>
+                        <div className="flex gap-1">
+                          <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-stone-200" />
+                          <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-stone-200" />
                         </div>
-                      ) : files.length > 0 ? (
-                        <div className="flex flex-col items-center gap-3 text-center p-4">
-                          <div className="p-4 bg-emerald-50 rounded-full">
-                            <CheckCircle2 className="w-8 h-8 text-emerald-500" />
-                          </div>
-                          <span className="text-[10px] font-mono text-stone-400 uppercase tracking-tight">
-                            {currentFile || files[files.length-1].path}
-                          </span>
-                        </div>
-                      ) : (
-                        <Smartphone className="w-12 h-12 text-stone-100" />
-                      )}
-                    </div>
-                    <div className="space-y-3">
-                      <div className="h-4 w-full bg-stone-50 rounded-lg" />
-                      <div className="h-4 w-5/6 bg-stone-50 rounded-lg" />
-                      <div className="h-4 w-4/6 bg-stone-50 rounded-lg" />
-                    </div>
-                  </div>
+                      </div>
 
-                  {/* Tab Bar Mock */}
-                  <div className="h-20 border-t border-stone-100 flex items-center justify-around px-4 pb-4">
-                    <div className="w-8 h-8 rounded-xl bg-stone-100" />
-                    <div className="w-8 h-8 rounded-xl bg-stone-900 shadow-lg" />
-                    <div className="w-8 h-8 rounded-xl bg-stone-100" />
+                      {/* App Content Mock */}
+                      <div className="flex-1 p-6 space-y-6">
+                        <div className="h-8 w-3/4 bg-stone-100 rounded-lg animate-pulse" />
+                        <div className="aspect-square bg-stone-50 rounded-2xl border border-stone-100 flex items-center justify-center">
+                          {isBuilding ? (
+                            <div className="flex flex-col items-center gap-3">
+                              <Loader2 className="w-8 h-8 text-stone-200 animate-spin" />
+                              <span className="text-[8px] font-mono text-stone-300 uppercase tracking-widest">Building UI...</span>
+                            </div>
+                          ) : (
+                            <Smartphone className="w-12 h-12 text-stone-100" />
+                          )}
+                        </div>
+                        <div className="space-y-3">
+                          <div className="h-4 w-full bg-stone-50 rounded-lg" />
+                          <div className="h-4 w-5/6 bg-stone-50 rounded-lg" />
+                          <div className="h-4 w-4/6 bg-stone-50 rounded-lg" />
+                        </div>
+                      </div>
+
+                      {/* Tab Bar Mock */}
+                      <div className="h-20 border-t border-stone-100 flex items-center justify-around px-4 pb-4">
+                        <div className="w-8 h-8 rounded-xl bg-stone-100" />
+                        <div className="w-8 h-8 rounded-xl bg-stone-900 shadow-lg" />
+                        <div className="w-8 h-8 rounded-xl bg-stone-100" />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <p className="mt-4 text-[10px] font-mono text-stone-400 uppercase tracking-widest">Live Preview Mockup</p>
+                  <p className="mt-4 text-[10px] font-mono text-stone-400 uppercase tracking-widest">Live Preview Mockup</p>
+                </>
+              )}
             </div>
           </div>
         </div>

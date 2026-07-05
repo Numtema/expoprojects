@@ -89,20 +89,21 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F4F0] text-stone-900 font-sans selection:bg-stone-900 selection:text-white">
+    <div className="min-h-screen bg-[#F5F4F0] text-stone-900 font-sans selection:bg-stone-900 selection:text-white pt-24">
       {/* Navigation */}
-      <nav className="border-b border-stone-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <motion.nav 
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="fixed top-4 left-4 right-4 sm:left-8 sm:right-8 lg:left-1/2 lg:-translate-x-1/2 lg:w-full lg:max-w-5xl mx-auto border border-stone-200 bg-white/80 backdrop-blur-md z-50 rounded-full shadow-sm"
+      >
+        <div className="px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3 cursor-pointer" onClick={reset}>
-            <span className="font-mono font-black tracking-tighter text-2xl uppercase text-stone-900">ExpoGo.Builder</span>
-            <div className="hidden sm:flex items-center gap-1.5 px-2 py-1 bg-stone-100 rounded-lg border border-stone-200">
-              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-[9px] font-mono text-stone-500 uppercase font-bold tracking-tighter">Backend API Ready</span>
-            </div>
+            <span className="font-mono font-black tracking-tighter text-xl uppercase text-stone-900">ExpoGo.Builder</span>
           </div>
           
           {plan && (
-            <div className="flex items-center bg-stone-100 p-1 rounded-2xl border border-stone-200">
+            <div className="hidden sm:flex items-center bg-stone-100 p-1 rounded-full border border-stone-200 absolute left-1/2 -translate-x-1/2">
               <NavTab 
                 active={activeTab === 'architect'} 
                 onClick={() => setActiveTab('architect')}
@@ -118,21 +119,21 @@ export default function App() {
             </div>
           )}
 
-          <div className="hidden md:flex items-center gap-6">
+          <div className="flex items-center gap-6">
             <a 
-              href="https://github.com/expo-starter/expo-local-first-template" 
+              href="https://github.com/Numtema/expoprojects" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-[10px] font-mono font-bold text-stone-400 hover:text-stone-900 flex items-center gap-2 transition-colors uppercase tracking-widest"
+              className="text-stone-400 hover:text-stone-900 flex items-center gap-2 transition-colors"
+              title="Numtema Expo Projects"
             >
-              <Github className="w-4 h-4" />
-              Template Base
+              <Github className="w-5 h-5" />
             </a>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
-      <main className="py-12">
+      <main className="py-8">
         <AnimatePresence mode="wait">
           {!plan ? (
             <motion.div
@@ -143,15 +144,17 @@ export default function App() {
               className="space-y-10 sm:space-y-12"
             >
                <div className="text-center space-y-0 px-4 sm:px-6 relative pt-4 md:pt-8">
-                <h2 className="text-[10vw] sm:text-[7vw] md:text-5xl lg:text-6xl xl:text-7xl font-sans font-black tracking-tighter text-stone-900 uppercase max-w-5xl mx-auto leading-[0.9] sm:leading-[0.9] flex flex-col items-center">
+                <h2 className="text-[10vw] sm:text-[7vw] md:text-5xl lg:text-6xl xl:text-[4.5rem] font-sans font-black tracking-tighter text-stone-900 uppercase max-w-5xl mx-auto leading-[0.9] sm:leading-[0.9] flex flex-col items-center">
                   <span className="block">ARCHITECT <span className="text-stone-300">&</span> BUILD YOUR</span>
-                  <span className="block">NEXT <span className="text-stone-300">LOCAL-FIRST</span></span>
-                  <span className="block">EXPERIENCE.</span>
+                  <span className="block">NEXT <span className="text-stone-300">SCALABLE</span></span>
+                  <span className="block">APPLICATION.</span>
                 </h2>
                 <div className="relative mt-6 md:mt-10">
-                  <div className="absolute -top-3 md:-top-5 left-1/2 -translate-x-1/2 md:-translate-x-[140px] w-6 md:w-10 h-1 md:h-1.5 bg-blue-500 rounded-full" />
-                  <p className="text-stone-400 font-serif italic text-base sm:text-lg md:text-xl max-w-3xl mx-auto leading-relaxed px-2 sm:px-4">
-                    A multi-agent system powered by Gemini 3.1 Pro that plans and generates full Expo projects.
+                  <div className="absolute -top-3 md:-top-5 left-1/2 -translate-x-1/2 md:-translate-x-[200px] w-6 md:w-10 h-1 md:h-1.5 bg-blue-500 rounded-full" />
+                  <p className="text-stone-500 font-serif italic text-base sm:text-lg md:text-xl max-w-3xl mx-auto leading-relaxed px-2 sm:px-4">
+                    A professional system that plans and generates production-ready Expo projects with Auth & DB.
+                    <br className="hidden sm:block mt-2" />
+                    <span className="text-stone-400">Un système professionnel qui planifie et génère des projets Expo prêts pour la production.</span>
                   </p>
                 </div>
               </div>
@@ -269,20 +272,16 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-12">
           <div className="space-y-3 text-center md:text-left">
             <p className="text-lg font-mono font-black uppercase tracking-tighter text-stone-900">ExpoGo.Builder</p>
-            <p className="text-sm text-stone-400 font-serif italic max-w-sm leading-relaxed">
-              Automating the architectural planning and code generation of local-first mobile applications.
+            <p className="text-sm text-stone-500 font-serif italic max-w-sm leading-relaxed">
+              Automating the architectural planning and code generation of professional mobile applications.
             </p>
-            {backendData && (
-              <div className="mt-4 p-3 bg-stone-50 rounded-xl border border-stone-100 text-[10px] font-mono text-stone-400">
-                <span className="block uppercase font-bold text-stone-500 mb-1">Backend API Response:</span>
-                <pre className="whitespace-pre-wrap">{JSON.stringify(backendData, null, 2)}</pre>
-              </div>
-            )}
+            <p className="text-sm text-stone-400 font-serif italic max-w-sm leading-relaxed">
+              Automatisation de la planification architecturale et de la génération de code pour des applications mobiles professionnelles.
+            </p>
           </div>
           <div className="flex flex-wrap items-center justify-center md:justify-end gap-8 md:gap-12">
             <FooterLink label="Documentation" />
-            <FooterLink label="Template Source" />
-            <FooterLink label="AI Studio" />
+            <FooterLink label="Nümtema AI LAB" />
           </div>
         </div>
       </footer>
