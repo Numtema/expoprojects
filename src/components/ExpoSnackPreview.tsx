@@ -23,7 +23,16 @@ export const ExpoSnackPreview = ({ files, dependencies }: ExpoSnackPreviewProps)
         const snackFiles: Record<string, any> = {};
         files.forEach(f => {
           const cleanPath = f.path.replace(/^\.\//, '').replace(/^\//, '');
-          snackFiles[cleanPath] = { type: 'CODE', contents: f.content };
+          
+          // Calculate parent directory depth
+          const parts = cleanPath.split('/');
+          const depth = parts.length - 1;
+          const relativePrefix = depth === 0 ? './' : '../'.repeat(depth);
+          
+          // Replace `@/` imports with computed relative path prefix
+          const resolvedContent = f.content.replace(/(['"])@\/([^'"]+)\1/g, `$1${relativePrefix}$2$1`);
+          
+          snackFiles[cleanPath] = { type: 'CODE', contents: resolvedContent };
         });
 
         // Ensure App.js exists for Expo Snack if it's an Expo Router app
@@ -50,9 +59,21 @@ export const ExpoSnackPreview = ({ files, dependencies }: ExpoSnackPreviewProps)
           snackDeps[d] = { version: '*' };
         });
         
-        if (!snackDeps['expo-router']) {
-          snackDeps['expo-router'] = { version: '*' };
-        }
+        const essentials = [
+          'expo-router',
+          'expo-splash-screen',
+          'expo-status-bar',
+          'expo-font',
+          'react-native-safe-area-context',
+          'react-native-screens',
+          'lucide-react-native',
+          'nativewind',
+        ];
+        essentials.forEach(pkg => {
+          if (!snackDeps[pkg]) {
+            snackDeps[pkg] = { version: '*' };
+          }
+        });
 
         const snack = new Snack({
           sdkVersion: '54.0.0',
