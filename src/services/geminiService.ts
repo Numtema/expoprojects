@@ -163,6 +163,8 @@ export async function generateFileContent(plan: AppPlan, filePath: string, conte
     2. Follow the directory structure: app/, components/ui/, components/primitives/, db/, lib/icons/.
     3. For screens, use functional components with "export default function".
     4. Ensure accessibility props are included where appropriate.
+    5. VERY IMPORTANT: Ensure all React components, especially within arrays, loops, and Expo Router <Tabs.Screen> or <Stack.Screen>, have unique \`key\` props and unique \`name\` props to avoid "Encountered two children with the same key" errors.
+    6. For Expo Router layouts (app/_layout.tsx, app/(tabs)/_layout.tsx), ensure that each <Stack.Screen> or <Tabs.Screen> has a unique \`name\` prop that exactly matches the route name. Do not duplicate screen names.
     
     Return ONLY the raw code content. No markdown blocks.
   `;
